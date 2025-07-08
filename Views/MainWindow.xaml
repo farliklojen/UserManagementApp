@@ -1,0 +1,62 @@
+<Window x:Class="UserManagementApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:UserManagementApp.ViewModels"
+        Title="Kasir perumahan" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <StackPanel Background="#f2f2f2" Grid.Column="0">
+            <Button Content="🏠 Home" Margin="10" Height="40"/>
+            <Button Content="💰 Transaksi" Margin="10" Height="40"/>
+            <Button Content="⚙ Setting" Margin="10" Height="40"/>
+            <StackPanel VerticalAlignment="Bottom" Margin="10">
+                <Button Content="Logout" Background="#002366" Foreground="White" Height="35"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <DockPanel Grid.Column="1" Background="#e0e0e0">
+            <!-- Header -->
+            <DockPanel DockPanel.Dock="Top" Background="#002366" Height="50">
+                <TextBlock Text="Kasir perumahan" Foreground="White" FontSize="18" VerticalAlignment="Center" Margin="10"/>
+            </DockPanel>
+
+            <!-- Top Controls -->
+            <StackPanel Orientation="Horizontal" Margin="10" DockPanel.Dock="Top" HorizontalAlignment="Left">
+                <TextBox Width="200" Height="30" Margin="0,0,5,0"/>
+                <Button Content="⏷ Filter Role" Width="100" Height="30" Margin="0,0,5,0"/>
+                <Button Content="Tambah User Baru" Width="130" Height="30" Background="#002366" Foreground="White" Command="{Binding AddUserCommand}"/>
+            </StackPanel>
+
+            <!-- Data Grid -->
+            <DataGrid ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="No" Binding="{Binding No}" Width="40"/>
+                    <DataGridTextColumn Header="Nama Lengkap" Binding="{Binding Username}" Width="*"/>
+                    <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="100"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
+                    <DataGridTemplateColumn Header="Aksi" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="✏ Edit" Width="50" Height="25"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Bottom Button -->
+            <Button Content="Export excel" Width="120" Height="30" Background="#002366" Foreground="White" HorizontalAlignment="Right" Margin="10"/>
+        </DockPanel>
+    </Grid>
+</Window>
